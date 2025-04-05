@@ -31,7 +31,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.initState();
     Future.microtask(() {
       Provider.of<DashboardProvider>(context, listen: false).refreshDashboard();
-      Provider.of<ExpenseProvider>(context, listen: false).fetchExpensesByWeek();
+      Provider.of<ExpenseProvider>(
+        context,
+        listen: false,
+      ).fetchExpensesByWeek();
       Provider.of<IncomeProvider>(context, listen: false).fetchIncomesByMonth();
     });
   }
@@ -73,10 +76,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 const Text(
                   'Période',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 12),
                 SegmentedButton<String>(
@@ -132,7 +132,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         }
 
         final expensesByCategory = dashboardProvider.expensesByCategory;
-        
+
         if (expensesByCategory.isEmpty) {
           return const Card(
             elevation: 2,
@@ -148,7 +148,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           );
         }
 
-        double totalExpenses = expensesByCategory.values.fold(0, (sum, amount) => sum + amount);
+        double totalExpenses = expensesByCategory.values.fold(
+          0,
+          (sum, amount) => sum + amount,
+        );
 
         return Card(
           elevation: 2,
@@ -159,10 +162,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 const Text(
                   'Dépenses par catégorie',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
                 Text(
@@ -179,7 +179,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     PieChartData(
                       sectionsSpace: 2,
                       centerSpaceRadius: 40,
-                      sections: _getPieChartSections(expensesByCategory, totalExpenses),
+                      sections: _getPieChartSections(
+                        expensesByCategory,
+                        totalExpenses,
+                      ),
                     ),
                   ),
                 ),
@@ -193,10 +196,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  List<PieChartSectionData> _getPieChartSections(Map<String, double> data, double total) {
+  List<PieChartSectionData> _getPieChartSections(
+    Map<String, double> data,
+    double total,
+  ) {
     List<PieChartSectionData> sections = [];
     int colorIndex = 0;
-    
+
     data.forEach((category, amount) {
       final double percentage = (amount / total) * 100;
       sections.add(
@@ -214,14 +220,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       );
       colorIndex++;
     });
-    
+
     return sections;
   }
 
   Widget _buildLegend(Map<String, double> data) {
     List<Widget> legendItems = [];
     int colorIndex = 0;
-    
+
     data.forEach((category, amount) {
       legendItems.add(
         Padding(
@@ -235,10 +241,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
               const SizedBox(width: 8),
               Expanded(
-                child: Text(
-                  category,
-                  style: const TextStyle(fontSize: 14),
-                ),
+                child: Text(category, style: const TextStyle(fontSize: 14)),
               ),
               Text(
                 '${amount.toStringAsFixed(2)} €',
@@ -253,7 +256,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       );
       colorIndex++;
     });
-    
+
     return Column(children: legendItems);
   }
 
@@ -274,7 +277,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         }
 
         final expensesVsBudget = dashboardProvider.expensesVsBudget;
-        
+
         if (expensesVsBudget.isEmpty) {
           return const Card(
             elevation: 2,
@@ -299,10 +302,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 const Text(
                   'Dépenses vs Budget',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 16),
                 SizedBox(
@@ -316,10 +316,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         touchTooltipData: BarTouchTooltipData(
                           tooltipBgColor: Colors.blueGrey,
                           getTooltipItem: (group, groupIndex, rod, rodIndex) {
-                            String category = expensesVsBudget.keys.elementAt(group.x.toInt());
-                            double value = rodIndex == 0 
-                                ? expensesVsBudget[category]!['expense']! 
-                                : expensesVsBudget[category]!['budget']!;
+                            String category = expensesVsBudget.keys.elementAt(
+                              group.x.toInt(),
+                            );
+                            double value =
+                                rodIndex == 0
+                                    ? expensesVsBudget[category]!['expense']!
+                                    : expensesVsBudget[category]!['budget']!;
                             return BarTooltipItem(
                               '${rodIndex == 0 ? 'Dépense' : 'Budget'}: ${value.toStringAsFixed(2)} €',
                               const TextStyle(color: Colors.white),
@@ -333,12 +336,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           sideTitles: SideTitles(
                             showTitles: true,
                             getTitlesWidget: (value, meta) {
-                              if (value >= 0 && value < expensesVsBudget.length) {
-                                String category = expensesVsBudget.keys.elementAt(value.toInt());
+                              if (value >= 0 &&
+                                  value < expensesVsBudget.length) {
+                                String category = expensesVsBudget.keys
+                                    .elementAt(value.toInt());
                                 return Padding(
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: Text(
-                                    category.length > 10 ? '${category.substring(0, 10)}...' : category,
+                                    category.length > 10
+                                        ? '${category.substring(0, 10)}...'
+                                        : category,
                                     style: const TextStyle(fontSize: 10),
                                   ),
                                 );
@@ -377,11 +384,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   children: [
                     Row(
                       children: [
-                        Container(
-                          width: 16,
-                          height: 16,
-                          color: Colors.blue,
-                        ),
+                        Container(width: 16, height: 16, color: Colors.blue),
                         const SizedBox(width: 4),
                         const Text('Dépenses'),
                       ],
@@ -389,11 +392,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     const SizedBox(width: 24),
                     Row(
                       children: [
-                        Container(
-                          width: 16,
-                          height: 16,
-                          color: Colors.green,
-                        ),
+                        Container(width: 16, height: 16, color: Colors.green),
                         const SizedBox(width: 4),
                         const Text('Budget'),
                       ],
@@ -420,7 +419,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<BarChartGroupData> _getBarGroups(Map<String, Map<String, double>> data) {
     List<BarChartGroupData> barGroups = [];
     int index = 0;
-    
+
     data.forEach((category, values) {
       barGroups.add(
         BarChartGroupData(
@@ -449,7 +448,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       );
       index++;
     });
-    
+
     return barGroups;
   }
 
@@ -459,21 +458,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
       children: [
         const Text(
           'Résumé',
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 16),
         Row(
           children: [
-            Expanded(
-              child: _buildIncomeCard(),
-            ),
+            Expanded(child: _buildIncomeCard()),
             const SizedBox(width: 16),
-            Expanded(
-              child: _buildExpenseCard(),
-            ),
+            Expanded(child: _buildExpenseCard()),
           ],
         ),
         const SizedBox(height: 16),
@@ -486,7 +478,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Consumer<IncomeProvider>(
       builder: (context, incomeProvider, child) {
         final totalIncome = incomeProvider.getTotalIncome();
-        
+
         return Card(
           color: Colors.green.shade50,
           elevation: 2,
@@ -510,7 +502,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '${totalIncome.toStringAsFixed(2)} €',
+                  '${totalIncome.toStringAsFixed(2)} XOF',
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -520,10 +512,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 const SizedBox(height: 4),
                 const Text(
                   'Ce mois',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],
             ),
@@ -540,7 +529,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         for (var expense in expenseProvider.expenses) {
           totalExpenses += expense.amount;
         }
-        
+
         return Card(
           color: Colors.red.shade50,
           elevation: 2,
@@ -564,7 +553,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '${totalExpenses.toStringAsFixed(2)} €',
+                  '${totalExpenses.toStringAsFixed(2)} XOF',
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -574,10 +563,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 const SizedBox(height: 4),
                 const Text(
                   'Cette semaine',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],
             ),
@@ -591,15 +577,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Consumer2<IncomeProvider, ExpenseProvider>(
       builder: (context, incomeProvider, expenseProvider, child) {
         final totalIncome = incomeProvider.getTotalIncome();
-        
+
         double totalExpenses = 0;
         for (var expense in expenseProvider.expenses) {
           totalExpenses += expense.amount;
         }
-        
+
         final balance = totalIncome - totalExpenses;
         final isPositive = balance >= 0;
-        
+
         return Card(
           color: isPositive ? Colors.blue.shade50 : Colors.orange.shade50,
           elevation: 2,
@@ -626,7 +612,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  '${balance.toStringAsFixed(2)} €',
+                  '${balance.toStringAsFixed(2)} XOF',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -636,10 +622,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 const SizedBox(height: 4),
                 Text(
                   isPositive ? 'Excédent' : 'Déficit',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey,
-                  ),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
                 ),
               ],
             ),

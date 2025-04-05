@@ -200,7 +200,7 @@ class _ExpensesScreenState extends State<ExpensesScreen> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                '${expense.amount.toStringAsFixed(2)} €',
+                                '${expense.amount.toStringAsFixed(2)} XOF',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,

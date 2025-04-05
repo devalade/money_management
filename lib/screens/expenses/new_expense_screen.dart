@@ -186,7 +186,8 @@ class _NewExpenseScreenState extends State<NewExpenseScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Montant de la dépense',
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.euro),
+                  prefixIcon: Icon(Icons.attach_money),
+                  suffixText: 'XOF',
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {

@@ -119,7 +119,8 @@ class _NewIncomeScreenState extends State<NewIncomeScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Montant du revenu',
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.euro),
+                  prefixIcon: Icon(Icons.attach_money),
+                  suffixText: 'XOF',
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {

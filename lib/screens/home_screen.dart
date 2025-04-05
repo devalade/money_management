@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
-            label: 'Accueil',
+            label: 'Tableau de bord',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.category),

@@ -103,7 +103,7 @@ class _BudgetsScreenState extends State<BudgetsScreen> {
                   }
                 },
                 child: ListTile(
-                  title: Text('${budget.periodicity} - ${budget.amount} €'),
+                  title: Text('${budget.periodicity} - ${budget.amount} XOF'),
                   trailing: IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () {

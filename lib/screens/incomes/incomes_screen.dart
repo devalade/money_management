@@ -228,7 +228,7 @@ class _IncomesScreenState extends State<IncomesScreen> {
                                   ],
                                 ),
                                 trailing: Text(
-                                  '${income.amount.toStringAsFixed(2)} €',
+                                  '${income.amount.toStringAsFixed(2)} XOF',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16,

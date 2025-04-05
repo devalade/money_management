@@ -113,7 +113,8 @@ class _EditBudgetScreenState extends State<EditBudgetScreen> {
                 decoration: const InputDecoration(
                   labelText: 'Montant',
                   border: OutlineInputBorder(),
-                  prefixIcon: Icon(Icons.euro),
+                  prefixIcon: Icon(Icons.attach_money),
+                  suffixText: 'XOF',
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
