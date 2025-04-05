@@ -83,12 +83,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   segments: const [
                     ButtonSegment<String>(
                       value: 'weekly',
-                      label: Text('Hebdo'),
+                      label: Text('Sem.'),
                       icon: Icon(Icons.calendar_view_week),
                     ),
                     ButtonSegment<String>(
                       value: 'monthly',
-                      label: Text('Mensuel'),
+                      label: Text('Mois'),
                       icon: Icon(Icons.calendar_view_month),
                     ),
                     ButtonSegment<String>(
@@ -98,7 +98,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     ButtonSegment<String>(
                       value: 'yearly',
-                      label: Text('Annuel'),
+                      label: Text('An'),
                       icon: Icon(Icons.calendar_today),
                     ),
                   ],
@@ -162,26 +162,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
               children: [
                 const Text(
                   'Dépenses par catégorie',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Total: ${totalExpenses.toStringAsFixed(2)} €',
+                  'Total: ${totalExpenses.toStringAsFixed(2)} XOF',
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 const SizedBox(height: 16),
-                SizedBox(
-                  height: 200,
-                  child: PieChart(
-                    PieChartData(
-                      sectionsSpace: 2,
-                      centerSpaceRadius: 40,
-                      sections: _getPieChartSections(
-                        expensesByCategory,
-                        totalExpenses,
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: SizedBox(
+                    height: 200,
+                    child: PieChart(
+                      PieChartData(
+                        sectionsSpace: 2,
+                        centerSpaceRadius: 40,
+                        sections: _getPieChartSections(
+                          expensesByCategory,
+                          totalExpenses,
+                        ),
                       ),
                     ),
                   ),
@@ -244,7 +247,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 child: Text(category, style: const TextStyle(fontSize: 14)),
               ),
               Text(
-                '${amount.toStringAsFixed(2)} €',
+                '${amount.toStringAsFixed(2)} XOF',
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
